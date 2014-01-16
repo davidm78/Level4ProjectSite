@@ -1,0 +1,13 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+#map_canvas {
+  width: 900px;
+  height: 400px;
+  text-align: center;
+}
