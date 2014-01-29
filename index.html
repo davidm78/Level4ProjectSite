@@ -11,12 +11,14 @@
   <title>Pedometer Website</title>
 
   <style>
-  html, body, #map-canvas {
+  #map-canvas {
     height: 100%;
+    width:1000px;
     margin: 0px;
-    padding: 0px
+    padding: 0px;
   }
-  /*#panel {
+
+  #panel {
     position: absolute;
     top: 5px;
     left: 50%;
@@ -25,13 +27,22 @@
     background-color: #fff;
     padding: 5px;
     border: 1px solid #999;
-  }*/
+  }
 
-    #right {
+  #right {
     position: absolute;
     background-color: red;
     left: 200px;
     width: 200px;
+  }
+
+  #numbertotal{
+      font-size:1500%
+    }
+
+  #stepstoday{
+      font-size:750%;
+    }
   }
 
   </style>
@@ -72,18 +83,13 @@
   <div class="container">
 
     <div class="starter-template">
-      <h1>Pedometer Tracker</h1>
-      <p class="lead">This pedometer is a great way to track your own steps and see what users just like you have been doing in and around the city! Download our app in the Google Play Store!
-
-        Users set the app running in their pockets everyday, and information about the number of steps they made that day and information about their current location are uploaded to the server. This website takes that information and translates it into Heatmaps and other various information using your account.
-      </p>
+      <h1 class="numbertotal" class="lead" id ="numbertotal"><strong></strong></h1>
+      <p class="stepstoday" class="lead" id="stepstoday"><strong>Steps and counting!</p>
     </div>
 
     <div class = "text-left">
-      <p class="lead"> <strong> Today's usage map: HOT WALKING ACTIVITY IN DA WEST END!!!!1111!!!!11111!</strong> </p>
+      <p class="lead"> <strong> Today's activity map: </strong> </p>
     </div>
-
-    <div id="map_canvas"></div>
 
     <div id="panel">
       <button onclick="toggleHeatmap()">Toggle Heatmap</button>
@@ -91,17 +97,15 @@
       <button onclick="changeRadius()">Change radius</button>
       <button onclick="changeOpacity()">Change opacity</button>
     </div>
-    <div id="map-canvas"></div>
+    <div id="map_canvas"></div>
 
-    <!-- <form class="form-signin" role="form" action="http://tethys.dcs.gla.ac.uk/davidsteps/site/userdata.php" method="post">
-      <h2 class="form-signin-heading">Please sign in</h2>
-      <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
-      <input type="password" class="form-control" placeholder="Password" required>
-      <label class="checkbox">
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form> -->
+    <div class="text-left">
+     <br>
+     <p class="lead">This pedometer is a great way to track your own steps and see what users just like you have been doing in and around the city! Download our app in the Google Play Store!
+
+      Users set the app running in their pockets everyday, and information about the number of steps they made that day and information about their current location are uploaded to the server. This website takes that information and translates it into Heatmaps and other various information using your account.
+      </p>
+    </div>
 
   </div><!-- /.container -->
 
@@ -116,6 +120,13 @@
     var locationArray = new Array();
     var map, pointarray, heatmap;
     var walkData = [];
+
+    $.get( "http://tethys.dcs.gla.ac.uk/davidsteps/scripts/totalsteps.php", function(data) {
+      console.log(data.totalsteps[0].totalsteps);
+      $( ".numbertotal" )
+      .append(data.totalsteps[0].totalsteps);
+    }, "json" );
+
     $.ajax({
         url: "http://tethys.dcs.gla.ac.uk/davidsteps/scripts/heatmapdata.php",
         async: false,
@@ -188,13 +199,6 @@
     google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-
-    <div id="panel">
-      <button onclick="toggleHeatmap()">Toggle Heatmap</button>
-      <button onclick="changeGradient()">Change gradient</button>
-      <button onclick="changeRadius()">Change radius</button>
-      <button onclick="changeOpacity()">Change opacity</button>
-    </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
 

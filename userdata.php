@@ -1,6 +1,7 @@
 <?php
 
-$username = $_POST["username"]; 
+$username = $_POST["username"];
+$password = hash('sha256', $_POST["password"]); 
 
 ?>
 
